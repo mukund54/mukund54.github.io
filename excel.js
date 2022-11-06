@@ -46,7 +46,8 @@
             try {
                 if (window.commonApp) {
                     let outlineContainer = commonApp.getShell().findElements(true, ele => ele.hasStyleClass && ele.hasStyleClass("sapAppBuildingOutline"))[0]; // sId: "__container0"
-
+                    console.log("0000");
+					console.log(outlineContainer);
                     if (outlineContainer && outlineContainer.getReactProps) {
                         let parseReactState = state => {
                             let components = {};
