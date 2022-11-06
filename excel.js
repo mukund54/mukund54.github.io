@@ -127,12 +127,14 @@
         }
 
         onCustomWidgetBeforeUpdate(changedProperties) {
+            console.log("onCustomWidgetBeforeUpdate");
             if ("designMode" in changedProperties) {
                 this._designMode = changedProperties["designMode"];
             }
         }
 
         onCustomWidgetAfterUpdate(changedProperties) {
+            console.log("onCustomWidgetAfterUpdate");
             var that = this;
 
             let xlsxjs = "https://mukund54.github.io/xlsx.js";
@@ -225,6 +227,7 @@
 
     // UTILS
     function loadthis(that, changedProperties) {
+        console.log("loadthis");
         var that_ = that;
 
         widgetName = changedProperties.widgetName;
@@ -482,6 +485,7 @@
     }
 
     function loadScript(src, shadowRoot) {
+        console.log("loadScript");
         return new Promise(function(resolve, reject) {
             let script = document.createElement('script');
             script.src = src;
