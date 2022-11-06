@@ -141,6 +141,7 @@
                     await loadScript(xlsxjs, _shadowRoot);
                 } catch (e) {
                     console.log(e);
+                    console.log("hi");
                 } finally {
                     loadthis(that, changedProperties);
                 }
