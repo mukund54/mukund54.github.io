@@ -293,7 +293,7 @@
 
                     onInit: function() {
                         console.log(that._export_settings.title);
-                        console.log("widgetName:" + that.widgetName);
+                        console.log("widgetName123:" + that.widgetName);
 
                         if(that._firstConnection === 0) {
                             that._firstConnection = 1;
@@ -326,6 +326,7 @@
                             var correctsheet = false;
 
                             workbook.SheetNames.forEach(function (sheetName) {
+                                console.log(sheetName);
                                 if (sheetName === "Sheet1") {
                                     correctsheet = true;
                                     var csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
