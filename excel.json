@@ -1,0 +1,152 @@
+{
+  "id": "com.fd.djaja.sap.sac.excel",
+  "version": "0.0.2",
+  "name": "excel",
+  "description": "Excel",
+  "newInstancePrefix": "Excel",
+  "icon": ""
+ "vendor": "Ferry Djaja",
+  "eula": "",
+  "license": "",
+  "imports": [ "input-controls" ],
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "com-fd-djaja-sap-sac-excel",
+      "url": "http://localhost/SAC/sacexcel/excel.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    },
+    {
+      "kind": "styling",
+      "tag": "com-fd-djaja-sap-sac-excel-aps",
+      "url": "http://localhost/SAC/sacexcel/aps_excel.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    }
+  ],
+  "properties": {
+    "metadata": {
+      "type": "string",
+      "description": "For internal use",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "description": "title",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "subtitle",
+      "default": ""
+    },
+    "icon": {
+      "type": "string",
+      "description": "icon",
+      "default": ""
+    },
+    "unit": {
+      "type": "string",
+      "description": "unit",
+      "default": ""
+    },
+    "footer": {
+      "type": "string",
+      "description": "footer",
+      "default": ""
+    }
+  },
+  "methods": {
+    "getTitle": {
+      "returnType": "string",
+      "description": "Get title",
+      "parameters": [],
+      "body": "return this.title;"
+    },
+    "setTitle": {
+      "description": "Set title",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The new title"
+        }
+      ],
+      "body": "this.title = value;"
+    },
+    "getSubTitle": {
+      "returnType": "string",
+      "description": "Get subtitle",
+      "parameters": [],
+      "body": "return this.subtitle;"
+    },
+    "setSubTitle": {
+      "description": "Set subtitle",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The new subtitle"
+        }
+      ],
+      "body": "this.subtitle = value;"
+    },
+    "getIcon": {
+      "returnType": "string",
+      "description": "Get icon",
+      "parameters": [],
+      "body": "return this.icon;"
+    },
+    "setIcon": {
+      "description": "Set icon",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The new icon"
+        }
+      ],
+      "body": "this.icon = value;"
+    },
+    "getUnit": {
+      "returnType": "string",
+      "description": "Get unit",
+      "parameters": [],
+      "body": "return this.unit;"
+    },
+    "setUnit": {
+      "description": "Set unit",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The new unit"
+        }
+      ],
+      "body": "this.unit = value;"
+    },
+    "getFooter": {
+      "returnType": "string",
+      "description": "Get footer",
+      "parameters": [],
+      "body": "return this.footer;"
+    },
+    "setFooter": {
+      "description": "Set footer",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The new footer"
+        }
+      ],
+      "body": "this.footer = value;"
+    }
+  },
+  "events": {
+  	"onStart": {
+      "description": "Specify the SAC Script that shall be triggered when the Export process is started."
+    }
+  }
+}
