@@ -334,7 +334,7 @@
                             var correctsheet = false;
 
                             workbook.SheetNames.forEach(function (sheetName) {
-                                console.log(sheetName);
+                                //console.log(sheetName);
                                 if (sheetName === "Sheet1") {
                                     correctsheet = true;
                                     var csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
@@ -346,25 +346,25 @@
                             });
 
                             if (correctsheet) {
-				    console.log("------");
-				    console.log(result);
-				    console.log(result.split("[$@~!~@$]")[0]);
-				    console.log(result.split("[$@~!~@$]")[0].split("[#@~!~@#]"));
+				    //console.log("------");
+				    //console.log(result);
+				    //console.log(result.split("[$@~!~@$]")[0]);
+				    //console.log(result.split("[$@~!~@$]")[0].split("[#@~!~@#]"));
                                 var lengthfield = result.split("[$@~!~@$]")[0].split("[#@~!~@#]").length;
-                                console.log("lengthfield: " + lengthfield);
+                                //console.log("lengthfield: " + lengthfield);
 
                                 var total = this_.getView().byId("total");
                                 var rec_count = 0;
 
                                 var len = 0;
                                 if (lengthfield === 4) {
-									console.log(result.split("[$@~!~@$]").length);
+									//console.log(result.split("[$@~!~@$]").length);
                                     for (var i = 1; i < result.split("[$@~!~@$]").length; i++) {
-										console.log(result.split("[$@~!~@$]")[i].length);
+										//console.log(result.split("[$@~!~@$]")[i].length);
                                         if (result.split("[$@~!~@$]")[i].length > 0) {
 
                                             var rec = result.split("[$@~!~@$]")[i].split("[#@~!~@#]");
-											console.log(rec);
+											//console.log(rec);
                                             if (rec.length > 0) {
                                                 len = rec[0].trim().length + rec[1].trim().length + rec[2].trim().length + rec[3].trim().length;
                                                 if (len > 0) {
@@ -377,8 +377,8 @@
                                                         'MEAS': rec[3].trim(),
                                                         
                                                     });
-													console.log("result_final");
-													console.log(result_final);
+													//console.log("result_final");
+													//console.log(result_final);
 													
                                                 }
                                             }
@@ -405,23 +405,26 @@
                                         oModel1.setData({
                                             fname: file.name,
                                         });
+										
+										console.log("OModel");
                                         console.log(oModel);
 
-                                        var oHeaders =  {
-                                            "Authorization": "Basic XXXXXXXX",
-                                            "Content-Type": "application/x-www-form-urlencoded"
-                                        }
+                                       // var oHeaders =  {
+                                         //   "Authorization": "Basic XXXXXXXX",
+                                           // "Content-Type": "application/x-www-form-urlencoded"
+                                        //}
 
-                                        var oModel = new JSONModel();
+                                        //var oModel = new JSONModel();
+										//console.log("result_final");
+                                        //console.log(result_final);
+                                        //oModel.loadData("processData.xsjs", JSON.stringify(result_final), true, 'POST', false, true, oHeaders);
 
-                                        console.log(result_final);
-                                        oModel.loadData("processData.xsjs", JSON.stringify(result_final), true, 'POST', false, true, oHeaders);
+                                        //oModel.attachRequestCompleted(function() {
+                                          //  var result = oModel.getData();
+                                            //console.log(result);
 
-                                        oModel.attachRequestCompleted(function() {
-                                            var result = oModel.getData();
-                                            console.log(result);
-
-                                            _result = result;
+                                            //_result = result;
+											 _result = JSON.stringify(result_final);
 
                                             that._firePropertiesChanged();
                                             this.settings = {};
