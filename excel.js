@@ -346,6 +346,10 @@
                             });
 
                             if (correctsheet) {
+				    console.log("------");
+				    console.log(result);
+				    console.log(result.split("[$@~!~@$]")[0]);
+				    console.log(result.split("[$@~!~@$]")[0].split("[#@~!~@#]"));
                                 var lengthfield = result.split("[$@~!~@$]")[0].split("[#@~!~@#]").length;
                                 console.log("lengthfield: " + lengthfield);
 
