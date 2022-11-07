@@ -308,6 +308,7 @@
                     },
 
                     onValidate: function (e) {
+			    console.log("onValidate");
                         var fU = this.getView().byId("idfileUploader");
                         var domRef = fU.getFocusDomRef();
                         var file = domRef.files[0];
