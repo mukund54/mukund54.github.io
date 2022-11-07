@@ -358,10 +358,13 @@
 
                                 var len = 0;
                                 if (lengthfield === 4) {
+									console.log(result.split("[$@~!~@$]").length);
                                     for (var i = 1; i < result.split("[$@~!~@$]").length; i++) {
+										console.log(result.split("[$@~!~@$]")[i].length);
                                         if (result.split("[$@~!~@$]")[i].length > 0) {
 
                                             var rec = result.split("[$@~!~@$]")[i].split("[#@~!~@#]");
+											console.log(rec);
                                             if (rec.length > 0) {
                                                 len = rec[0].trim().length + rec[1].trim().length + rec[2].trim().length + rec[3].trim().length;
                                                 if (len > 0) {
@@ -374,6 +377,9 @@
                                                         'MEAS': rec[3].trim(),
                                                         
                                                     });
+													console.log("result_final");
+													console.log(result_final);
+													
                                                 }
                                             }
                                         }
