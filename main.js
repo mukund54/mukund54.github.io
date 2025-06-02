@@ -1,15 +1,14 @@
-ar ajaxCall = (key, url, prompt) => {
+const ajaxCall = (key, url, prompt) => {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: url,
       type: "POST",
       dataType: "json",
       data: JSON.stringify({
-        model: "text-davinci-002",
-        prompt: prompt,
-        max_tokens: 1024,
-        n: 1,
-        temperature: 0.5,
+        model: "gpt-4o-mini",  // ✅ USE GPT-4O MINI
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 512,
+        temperature: 0.7,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +19,7 @@ ar ajaxCall = (key, url, prompt) => {
         resolve({ response, status, xhr });
       },
       error: function (xhr, status, error) {
-        const err = new Error('xhr error');
+        const err = new Error("xhr error");
         err.status = xhr.status;
         reject(err);
       },
@@ -28,26 +27,21 @@ ar ajaxCall = (key, url, prompt) => {
   });
 };
 
-const url = "https://api.openai.com/v1";
+const url = "https://api.openai.com/v1/chat/completions";
 
 (function () {
   const template = document.createElement("template");
   template.innerHTML = `
-      <style>
-      </style>
-      <div id="root" style="width: 100%; height: 100%;">
-      </div>
-    `;
+    <style></style>
+    <div id="root" style="width: 100%; height: 100%;"></div>
+  `;
+
   class MainWebComponent extends HTMLElement {
-    async post(apiKey, endpoint, prompt) {
-      const { response } = await ajaxCall(
-        apiKey,
-        `${url}/${endpoint}`,
-        prompt
-      );
-      //console.log(response.choices[0].text);
-      return response.choices[0].text;
+    async post(apiKey, prompt) {
+      const { response } = await ajaxCall(apiKey, url, prompt);
+      return response.choices[0].message.content;
     }
   }
+
   customElements.define("custom-widget", MainWebComponent);
 })();
