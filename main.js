@@ -5,7 +5,7 @@ const ajaxCall = (key, url, prompt) => {
       type: "POST",
       dataType: "json",
       data: JSON.stringify({
-        model: "gpt-4o-mini",  // ✅ USE GPT-4O MINI
+        model: "gpt-4o-mini",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 512,
         temperature: 0.7,
@@ -40,6 +40,25 @@ const url = "https://api.openai.com/v1/chat/completions";
     async post(apiKey, prompt) {
       const { response } = await ajaxCall(apiKey, url, prompt);
       return response.choices[0].message.content;
+    }
+
+    /**
+     * Accepts a comma-separated string and triggers download as Excel-compatible .csv
+     * @param {string} csvData - The comma-separated string (e.g., "Header1,Header2\\nRow1,Row2")
+     * @param {string} [filename] - Optional filename (default: "summary.csv")
+     */
+    exportToExcel(csvData, filename) {
+      if (!csvData) return;
+
+      var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+      var downloadLink = document.createElement("a");
+      var url = URL.createObjectURL(blob);
+      downloadLink.setAttribute("href", url);
+      downloadLink.setAttribute("download", filename || "summary.csv");
+      downloadLink.style.display = "none";
+      this.shadowRoot.appendChild(downloadLink);
+      downloadLink.click();
+      this.shadowRoot.removeChild(downloadLink);
     }
   }
 
