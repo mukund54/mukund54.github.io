@@ -43,22 +43,26 @@ const url = "https://api.openai.com/v1/chat/completions";
     }
 
     /**
-     * Accepts a comma-separated string and triggers download as Excel-compatible .csv
-     * @param {string} csvData - The comma-separated string (e.g., "Header1,Header2\\nRow1,Row2")
-     * @param {string} [filename] - Optional filename (default: "summary.csv")
+     * Export comma-separated string as a downloadable CSV file
+     * @param {string} csvData - The CSV-formatted string
+     * @param {string} filename - Optional filename
      */
     exportToExcel(csvData, filename) {
       if (!csvData) return;
 
-      var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-      var downloadLink = document.createElement("a");
-      var url = URL.createObjectURL(blob);
-      downloadLink.setAttribute("href", url);
-      downloadLink.setAttribute("download", filename || "summary.csv");
-      downloadLink.style.display = "none";
-      this.shadowRoot.appendChild(downloadLink);
-      downloadLink.click();
-      this.shadowRoot.removeChild(downloadLink);
+      try {
+        var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+        var link = document.createElement("a");
+        var csvUrl = URL.createObjectURL(blob);
+        link.href = csvUrl;
+        link.download = filename || "export.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        console.error("Export to Excel failed:", e.message);
+        throw new Error("Export to Excel failed.");
+      }
     }
   }
 
