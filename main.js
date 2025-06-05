@@ -1,33 +1,20 @@
-const ajaxCall = (key, url, prompt) => {
+const ajaxCall = (url, prompt) => {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: url,
       type: "POST",
-      dataType: "json",
-      data: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 512,
-        temperature: 0.7,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-      },
-      crossDomain: true,
-      success: function (response, status, xhr) {
-        resolve({ response, status, xhr });
+      contentType: "application/json",
+      data: JSON.stringify({ prompt: prompt }),
+      success: function (response) {
+        resolve(response.summary);
       },
       error: function (xhr, status, error) {
-        const err = new Error("xhr error");
-        err.status = xhr.status;
-        reject(err);
-      },
+        console.error("Proxy call failed:", xhr.status, error);
+        reject(new Error("Proxy call failed."));
+      }
     });
   });
 };
-
-const url = "https://api.openai.com/v1/chat/completions";
 
 (function () {
   const template = document.createElement("template");
@@ -37,9 +24,15 @@ const url = "https://api.openai.com/v1/chat/completions";
   `;
 
   class MainWebComponent extends HTMLElement {
-    async post(apiKey, prompt) {
-      const { response } = await ajaxCall(apiKey, url, prompt);
-      return response.choices[0].message.content;
+    /**
+     * Calls Flask proxy to summarize the input prompt.
+     * @param {string} proxyUrl - URL of the Flask server
+     * @param {string} prompt - Full prompt text to send
+     * @returns {Promise<string>}
+     */
+    async summarize(proxyUrl, prompt) {
+      const summary = await ajaxCall(proxyUrl, prompt);
+      return summary;
     }
 
     /**
@@ -51,9 +44,9 @@ const url = "https://api.openai.com/v1/chat/completions";
       if (!csvData) return;
 
       try {
-        var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-        var link = document.createElement("a");
-        var csvUrl = URL.createObjectURL(blob);
+        const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const csvUrl = URL.createObjectURL(blob);
         link.href = csvUrl;
         link.download = filename || "export.csv";
         document.body.appendChild(link);
