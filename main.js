@@ -9,8 +9,29 @@ const ajaxCall = (url, prompt) => {
         resolve(response.summary);
       },
       error: function (xhr, status, error) {
-        console.error("Proxy call failed:", xhr.status, error);
+        console.error("❌ Summarize call failed:", xhr.status, error);
         reject(new Error("Proxy call failed."));
+      }
+    });
+  });
+};
+
+const uploadCsvCall = (url, csvData, filename) => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: url,
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        csv: csvData,
+        filename: filename || "summary.csv"
+      }),
+      success: function (response) {
+        resolve(response.file_id);
+      },
+      error: function (xhr, status, error) {
+        console.error("❌ CSV upload failed:", xhr.status, error);
+        reject(new Error("CSV upload to Drive failed."));
       }
     });
   });
@@ -26,13 +47,12 @@ const ajaxCall = (url, prompt) => {
   class MainWebComponent extends HTMLElement {
     /**
      * Calls Flask proxy to summarize the input prompt.
-     * @param {string} proxyUrl - URL of the Flask server
+     * @param {string} proxyUrl - URL of the Flask server /summarize
      * @param {string} prompt - Full prompt text to send
      * @returns {Promise<string>}
      */
     async summarize(proxyUrl, prompt) {
-      const summary = await ajaxCall(proxyUrl, prompt);
-      return summary;
+      return await ajaxCall(proxyUrl, prompt);
     }
 
     /**
@@ -53,9 +73,20 @@ const ajaxCall = (url, prompt) => {
         link.click();
         document.body.removeChild(link);
       } catch (e) {
-        console.error("Export to Excel failed:", e.message);
+        console.error("❌ Export to Excel failed:", e.message);
         throw new Error("Export to Excel failed.");
       }
+    }
+
+    /**
+     * Uploads CSV data to Google Drive via Flask proxy
+     * @param {string} proxyUrl - URL of the Flask server /upload-csv
+     * @param {string} csvData - The CSV-formatted string
+     * @param {string} filename - Name to save the file as
+     * @returns {Promise<string>} - Google Drive file ID
+     */
+    async uploadToDrive(proxyUrl, csvData, filename) {
+      return await uploadCsvCall(proxyUrl, csvData, filename);
     }
   }
 
